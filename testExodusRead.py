@@ -30,8 +30,7 @@ def build_dict(variables, exodus_names):
         var = variables[exodus_name][:]
         
         # Check that the arrays don't have the following shape: [[1,1,1,1,1,1]].
-
-        # Make sure the array isn't 1d to do this change. Otherwise IndexError.
+        # Make sure the array isn't already 1d to do this change. Otherwise IndexError.
         if len(var.shape) != 1:
             # Check if this is a column vector.
             if var.shape[0] == 1 and var.shape[1] >= 1:
