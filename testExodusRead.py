@@ -34,13 +34,13 @@ def make_var_dict(variables, kind=''):
     # corresponding variable in the exodus file.
     # THIS ASSUMES A GIVEN NAMING CONVENTION IN THE EXODUS FILES WHICH MAY
     # NEED TO BE ALTERED.
-    names_exodues = []
+    names_exodus = []
     for i, name in enumerate(readable_names):
-        names_exodus.append(f'{initial_f_string}{i+1}{final_f_string}', name)
+        names_exodus.append((f'{initial_f_string}{i+1}{final_f_string}', name))
 
     # Build the variable dictionary.
     # Keys are the readable names, values are the values.
-    var_dict = build_dict(variables, names_exodus)
+    var_dict = af.build_dict(variables, names_exodus)
     return var_dict
 
 def main():
