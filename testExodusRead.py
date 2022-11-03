@@ -45,7 +45,7 @@ def make_var_dict(variables, kind=''):
 
 def main():
     # Read in the exodus data
-    path = 'tutorial04-PressureVsTe/RF_Plasma_WithOut_Metastables_IC.e'
+    path = 'test_files/RF_Plasma_WithOut_Metastables_IC.e'
     nc = net.Dataset(path)
 
     # Get the positions
