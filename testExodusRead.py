@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import AuxFunctions as af
 
 
-def make_var_dict(variables, kind=''):
+def transcribe_variables(variables, kind=''):
     '''
     Create a dictionary of the names and values of the variables of interest.
     Considers a given kind of variables.
@@ -48,14 +48,17 @@ def main():
     path = 'test_files/RF_Plasma_WithOut_Metastables_IC.e'
     nc = net.Dataset(path)
 
+    # See all the variables in the exodus file
+    print(nc.variables.keys())
+
     # Get the positions
     # These also may exist in the following variables
     X = nc.variables['coordx']
 
     # A dictionary where the keys are the variable names input into the *.i
     # file and the values are the values of the variables.
-    node_variables_dict = make_var_dict(nc.variables, kind='node')
-    elem_variables_dict = make_var_dict(nc.variables, kind='elem')
+    node_variables_dict = transcribe_variables(nc.variables, kind='node')
+    elem_variables_dict = transcribe_variables(nc.variables, kind='elem')
 
     # Plot some data
     fig, ax = plt.subplots(2, sharex=True)
