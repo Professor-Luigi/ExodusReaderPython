@@ -10,7 +10,10 @@ def main():
     nc = net.Dataset(path)
 
     # See all the variables in the exodus file
-    print(nc.variables.keys())
+    print('Available Variables:')
+    print()
+    for key in nc.variables.keys():
+        print(key)
 
     # Get the positions
     # These also may exist in the following variables
@@ -40,7 +43,7 @@ def main():
     ax[1].set_xlabel('X')
     ax[1].legend()
     ax[1].set_yscale('log')
-    fig.savefig('test.png')
+    fig.savefig('example1D.png')
     nc.close()
 
 if __name__ == '__main__':
