@@ -4,25 +4,35 @@ import matplotlib.pyplot as plt
 import ExodusReader as er 
 
 
+'''
+Show how to use the function in ExodusReader with netCDF4 to read an exodus
+file. This way gives the option to look into the exodus file further. This
+file achieves the same thing as example1D_RF_plasma_noIO.py.
+
+The file used in this example comes from:
+https://github.com/shannon-lab/zapdos in tutorial/tutorial04
+'''
 def main():
     # Read in the exodus data
     path = 'test_files/RF_Plasma_WithOut_Metastables_IC.e'
-    nc = net.Dataset(path)
 
-    # See all the variables in the exodus file
-    print('Available Variables:')
-    print()
-    for key in nc.variables.keys():
-        print(key)
+    # Similar to open(path, 'r')
+    with net.Dataset(path) as nc:
+        # See all the variables in the exodus file
+        print('Available Variables:')
+        print()
+        for key in nc.variables.keys():
+            print(key)
 
-    # Get the positions
-    # These also may exist in the following variables
-    X = nc.variables['coordx']
+        # Get the positions
+        # These also may exist in the following variables
+        X = nc.variables['coordx']
 
-    # A dictionary where the keys are the variable names input into the *.i
-    # file and the values are the values of the variables.
-    node_variables_dict = er.transcribe_variables(nc.variables, kind='node')
-    elem_variables_dict = er.transcribe_variables(nc.variables, kind='elem')
+        # A dictionary where the keys are the variable names input into the *.i
+        # file and the values are the values of the variables.
+        # node variables exist on the nodes and elem variables exist in between
+        node_variables_dict = er.transcribe_variables(nc.variables, kind='node')
+        elem_variables_dict = er.transcribe_variables(nc.variables, kind='elem')
 
     # Plot some data
     fig, ax = plt.subplots(2, sharex=True)
@@ -43,8 +53,7 @@ def main():
     ax[1].set_xlabel('X')
     ax[1].legend()
     ax[1].set_yscale('log')
-    fig.savefig('example1D.png')
-    nc.close()
+    fig.savefig('example1D_RF_plasma.png')
 
 if __name__ == '__main__':
     main()
