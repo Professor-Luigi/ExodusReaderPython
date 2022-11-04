@@ -1,10 +1,12 @@
+import netCDF4 as net
+
 import AuxFunctions as af
 
 
 def transcribe_variables(variables, kind=''):
     '''
     Create a dictionary of the names and values of the variables of interest.
-    Considers a given kind of variables.
+    Considers a given kind of variables. Requires use of fileIO with netCDF4. 
 
     variables      | netCDF4.variable | The variables that were read in
                                       | "netCDF4.Dataset(path).variables.
@@ -39,3 +41,19 @@ def transcribe_variables(variables, kind=''):
     var_dict = af.build_dict(variables, names_exodus)
     return var_dict
 
+def read_exodus(path_to_file):
+    '''
+    Reads the exodus file and outputs a dictionary with keys being the variable
+    names and the values as the values of the variable. Does the IO inside so
+    the user doesn't have to think about it.
+
+    path_to_file | str | The path to the exodus file.
+    '''
+
+    with net.Dataset(path_to_file) as nc:
+        # A dictionary where the keys are the variable names input into the *.i
+        # file and the values are the values of the variables.
+        node_variables_dict = transcribe_variables(nc.variables, kind='node')
+        elem_variables_dict = transcribe_variables(nc.variables, kind='elem')
+
+    return node_variables_dict, elem_variables_dict
