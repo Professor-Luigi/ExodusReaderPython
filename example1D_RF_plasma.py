@@ -5,9 +5,10 @@ import ExodusReader as er
 
 
 '''
-Show how to use the function in ExodusReader with netCDF4 to read an exodus
-file. This way gives the option to look into the exodus file further. This
-file achieves the same thing as example1D_RF_plasma_noIO.py.
+Show how to read an exodus file using this package and netCDF4.
+This way gives the option to look into the exodus file further.
+This file achieves the same thing as example1D_RF_plasma_noIO.py.
+
 
 The file used in this example comes from:
 https://github.com/shannon-lab/zapdos in tutorial/tutorial04
