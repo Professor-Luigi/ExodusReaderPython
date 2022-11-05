@@ -31,9 +31,20 @@ def main():
 
         # A dictionary where the keys are the variable names input into the *.i
         # file and the values are the values of the variables.
-        # node variables exist on the nodes and elem variables exist in between
+        # Node variables exist on the nodes and elem variables exist in between.
+        # ROUGHLY: node variables are defined in the Variables section and 
+        # element variables are defined in the AuxVariables section.
         node_variables_dict = er.transcribe_variables(nc.variables, kind='node')
         elem_variables_dict = er.transcribe_variables(nc.variables, kind='elem')
+
+    # Print the keys and the shapes of each variable
+    print('\nNode Variables:\n')
+    for key, value in node_variables_dict.items():
+        print(key, value.shape)
+
+    print('\nElement Variables:\n')
+    for key, value in elem_variables_dict.items():
+        print(key, value.shape)
 
     # Plot some data
     fig, ax = plt.subplots(2, sharex=True)
