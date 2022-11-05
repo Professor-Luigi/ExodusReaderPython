@@ -14,6 +14,9 @@ https://github.com/shannon-lab/zapdos in tutorial/tutorial04
 def main():
     # Read in the exodus data
     path = 'test_files/RF_Plasma_WithOut_Metastables_IC.e'
+
+    # ROUGHLY: node variables are defined in the Variables section and 
+    # element variables are defined in the AuxVariables section.
     node_variables_dict, elem_variables_dict = er.read_exodus(path)
 
     # Plot some data
