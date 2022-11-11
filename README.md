@@ -3,11 +3,10 @@ Read exodus files into a more usable form using python. This package is meant to
 
 This package can read netCDF type files (the filetype that exodus files are based on), but mainly focuses on exodus files. Specifically those output by the ZAPDOS software.
 
-For more information on exodus files, click [here](https://mooseframework.inl.gov/source/outputs/Exodus.html).
-
-For more information on ZAPDOS, click [here](https://github.com/shannon-lab/zapdos).
-
-For documentation on the netCDF4 library for python, click [here](https://unidata.github.io/netcdf4-python).
+For more information:
+- On exodus files, click [here](https://mooseframework.inl.gov/source/outputs/Exodus.html)
+- On ZAPDOS, click [here](https://github.com/shannon-lab/zapdos)
+- On the netCDF4 library for python, click [here](https://unidata.github.io/netcdf4-python)
 
 ## Installation
 Right now, the package can be installed in the usual way. Download the zip or open a terminal and clone into the desired directory:
