@@ -61,7 +61,7 @@ def read_exodus(path_to_file):
         elem_variables_dict['time'] = nc.variables['time_whole'][:]
 
         # Add the position arrays to the node variables.
-        # Sometimes they are not added by default.
+        # Sometimes they are not added by default. They are 1D arrays.
         node_variables_dict['coordx'] = nc.variables['coordx'][:]
         node_variables_dict['coordy'] = nc.variables['coordy'][:]
         node_variables_dict['coordz'] = nc.variables['coordz'][:]
