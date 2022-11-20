@@ -28,52 +28,56 @@ def main():
     for key, value in elem_variables_dict.items():
         print(key, value.shape)
 
-    # Make plots over time
+    time = node_variables_dict['time']
+    # The rf period is the timescale that things change on.
+    # These times were calcluated to span across one rf period.
+    sampled_times = np.array([7.3747e-5,
+                              7.3766e-5,
+                              7.3784e-5,
+                              7.3803e-5,
+                              7.3820e-5])
+    # Get the sampled time indices.
+    sampled_time_indices = np.ones(len(sampled_times), dtype=int)
+    for i, time_value in enumerate(sampled_times):
+        # The two slices are to get into the tuple that np.where returns and to
+        # get the actual index out of the array.
+        sampled_time_indices[i] = int(np.where(np.isclose(time,
+                                                          time_value,
+                                                          rtol=0,
+                                                          atol=1e-10))[0][0])
 
-    fig, axes = plt.subplots(nrows=2, ncols=3,
-                             sharex=True,
-                             figsize=(12,7),
-                             gridspec_kw=dict(wspace=0.25))
-    fig.suptitle('e$^-$ Log Density at various times')
+    linestyles = ['solid',
+                  'dotted',
+                  'dashed',
+                  'dashdot',
+                  (0,(1,10))
+                  ]
+    RF_PERIOD = 1/13.56e6 # s
+    time_ratio = [(sampled_time - sampled_times[0])/RF_PERIOD for sampled_time in sampled_times]
 
-    # Pick 6 times to plot (there are too many to plot them all)
-    sampled_time_indices = np.linspace(1, len(node_variables_dict['time'])-1, 6).astype(int)
+    # Plot the log densities
+    fig, ax = plt.subplots()
+    for i, sampled_time_index in enumerate(sampled_time_indices):
+        ax.plot(node_variables_dict['coordx'][:],
+                node_variables_dict['em'][sampled_time_index,:],
+                ls=linestyles[i], label=f'{time_ratio[i]:.3f}')
+    ax.legend(title='Fraction of RF Period')
+    ax.set_ylabel('Log Density')
+    ax.set_xlabel('x (m)')
+    ax.set_title('e$^-$ log density at various times')
+    fig.savefig(f'example1D_RF_plasma_time_log_noIO.png')
 
-    # Get the x array for the node variables.
-    # This gives a 1D array of the x coordinates. There is no time
-    # consideration with this.
-    x = node_variables_dict['coordx'][:]
-
-    # Plot each subplot
-    for ax, sampled_time_index in zip(axes.flatten(), sampled_time_indices):
-        ax.set_ylabel('Density')
-        ax.set_xlabel('X')
-        ax.set_title(f'{node_variables_dict["time"][sampled_time_index]:.2E} s')
-
-        # The time of the data is the first index and the position is the second.
-        ax.plot(x,node_variables_dict['em'][sampled_time_index,:])
-
-    fig.savefig(f'example1D_RF_plasma_time_6_plots_log_noIO.png')
-        
-    fig, axes = plt.subplots(nrows=2, ncols=3,
-                             sharex=True, sharey=True,
-                             figsize=(12,7))
-    fig.suptitle('e$^-$ Density at various times')
-
-    # Plot each subplot
-    for ax, sampled_time_index in zip(axes.flatten(), sampled_time_indices):
-        ax.set_ylabel('Density m$^{-3}$')
-        ax.set_xlabel('X')
-        ax.set_title(f'{node_variables_dict["time"][sampled_time_index]:.2E} s')
-
-        # The time of the data is the first index and the position is the second.
-        # This gives the x coords at every timestep. However, since the x
-        # coordinate does not change from timestep to timestep, this is not
-        # the most efficient way to to this.
+    # Plot the densities
+    fig, ax = plt.subplots()
+    for i, sampled_time_index in enumerate(sampled_time_indices):
         ax.plot(elem_variables_dict['x'][sampled_time_index,:],
-                elem_variables_dict['em_density'][sampled_time_index,:])
-
-    fig.savefig(f'example1D_RF_plasma_time_6_plots_lin_noIO.png')
+                elem_variables_dict['em_density'][sampled_time_index,:],
+                ls=linestyles[i], label=f'{time_ratio[i]:.3f}')
+    ax.legend(title='Fraction of RF Period')
+    ax.set_ylabel('Density (m$^{-3}$)')
+    ax.set_xlabel('x (m)')
+    ax.set_title('e$^-$ density at various times')
+    fig.savefig(f'example1D_RF_plasma_time_lin_noIO.png')
 
 if __name__ == '__main__':
     main()
