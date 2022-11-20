@@ -56,4 +56,14 @@ def read_exodus(path_to_file):
         node_variables_dict = transcribe_variables(nc.variables, kind='node')
         elem_variables_dict = transcribe_variables(nc.variables, kind='elem')
 
+        # Add the time array to both dictionaries
+        node_variables_dict['time'] = nc.variables['time_whole'][:]
+        elem_variables_dict['time'] = nc.variables['time_whole'][:]
+
+        # Add the position arrays to the node variables.
+        # Sometimes they are not added by default.
+        node_variables_dict['coordx'] = nc.variables['coordx'][:]
+        node_variables_dict['coordy'] = nc.variables['coordy'][:]
+        node_variables_dict['coordz'] = nc.variables['coordz'][:]
+
     return node_variables_dict, elem_variables_dict
