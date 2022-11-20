@@ -38,6 +38,8 @@ def main():
 
         # This is the positions for the node variables. To get the positions
         # of the element variables, use 'position' key in elem_variables_dict.
+        # This gives a 1D array of the x coordinates. There is no time
+        # consideration with this.
         x = nc.variables['coordx'][:]
 
         # This introduces some challenge into using this interface for getting
@@ -88,6 +90,9 @@ def main():
         ax.set_title(f'{time[sampled_time_index]:.2E} s')
 
         # The time of the data is the first index and the position is the second.
+        # This gives the x coords at every timestep. However, since the x
+        # coordinate does not change from timestep to timestep, this is not
+        # the most efficient way to to this.
         ax.plot(elem_variables_dict['x'][sampled_time_index,:],
                 elem_variables_dict['em_density'][sampled_time_index,:])
 
