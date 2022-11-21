@@ -105,5 +105,19 @@ def main():
     ax.set_title('e$^-$ density at various times')
     fig.savefig(f'example1D_RF_plasma_time_lin.png')
 
+    # Using plot smoothes out the data, which may not be desired. To show the
+    # "discreteness" of the grid, use step instead.
+    # Step plot the densities
+    fig, ax = plt.subplots()
+    for i, sampled_time_index in enumerate(sampled_time_indices):
+        ax.step(elem_variables_dict['x'][sampled_time_index,:],
+                elem_variables_dict['em_density'][sampled_time_index,:],
+                ls=linestyles[i], label=f'{time_ratio[i]:.3f}')
+    ax.legend(title='Fraction of RF Period')
+    ax.set_ylabel('Density (m$^{-3}$)')
+    ax.set_xlabel('x (m)')
+    ax.set_title('e$^-$ density at various times')
+    fig.savefig(f'example1D_RF_plasma_time_lin_step.png')
+
 if __name__ == '__main__':
     main()
