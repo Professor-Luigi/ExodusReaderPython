@@ -26,7 +26,11 @@ def transcribe_variables(variables, kind=''):
         final_f_string = 'eb1'
 
     # Get readable names for the variables of interest
-    readable_names = af.read_name_var(variables[variable_key][:])
+    try:
+        readable_names = af.read_name_var(variables[variable_key][:])
+    except KeyError:
+        print(f'No such variable as {kind}. Returning empty dictionary.')
+        return {}
 
     # Make a list of the names of the variables of interest with their
     # corresponding variable in the exodus file.
